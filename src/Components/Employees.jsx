@@ -8,6 +8,8 @@ import { CSVLink } from 'react-csv';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import { FaFileCsv } from 'react-icons/fa6';
+import { IoMdAdd } from 'react-icons/io';
+import PopUp from '../PopUp/PopUp';
 
 
 const Employees = () => {
@@ -15,18 +17,28 @@ const Employees = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [popupOpen, setPopupOpen] = useState(false);
+
+  const togglePopup = () => {
+    setPopupOpen(!popupOpen);
+  };
 
   const data = Array.from({ length: 50 }, (_, index) => ({
-    picture: `https://via.placeholder.com/150?text=Item${index + 1}`,
-    name: `Component ${index + 1}`,
-    type: ['Laptop', 'Scanner', 'UPS', 'Hardware'][index % 4],
-    brand: ['Apple', 'Dell', 'Epson', 'Asus'][index % 4],
-    quantity: Math.floor(Math.random() * 10) + 1,
-    availableQuantity: Math.floor(Math.random() * 10)
+    fullName: `Person ${index + 1}`,
+    email: `person${index + 1}@example.com`,
+    jobRole: ['Engineer', 'Manager', 'Analyst', 'Developer'][index % 4],
+    department: ['IT', 'HR', 'Finance', 'Marketing'][index % 4],
+    city: ['New York', 'Los Angeles', 'Chicago', 'Houston'][index % 4],
+    action: (
+      <>
+        <button className="px-2 py-1 bg-blue-500 text-white rounded mr-2">Edit</button>
+        <button className="px-2 py-1 bg-red-500 text-white rounded">Delete</button>
+      </>
+    )
   }));
 
   const filteredData = data.filter(item =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    item.fullName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -43,8 +55,15 @@ const Employees = () => {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-gray-700">Employees List</h1>
-     
+      <div className="flex justify-between items-center pb-3">
+        <h1 className="text-2xl font-semibold mb-6 text-gray-700">
+          Employees List
+        </h1>
+        <button  onClick={togglePopup} className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+  <IoMdAdd className="inline-block align-text-bottom mr-1" />
+  Add Employees
+</button>
+      </div>
         <div className="flex flex-wrap items-center mb-4">
           <button className="mr-2 p-2 bg-blue-500 text-white rounded flex items-center">
             <FiCopy className="mr-2" /> Copy
@@ -82,30 +101,24 @@ const Employees = () => {
       <table id="component-table" className="min-w-full bg-white">
         <thead>
           <tr className="w-full bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-            <th className="px-4 py-2 text-left ">Picture</th>
-            <th className="px-4 py-2 text-left ">Name</th>
-            <th className="px-4 py-2 text-left ">Type</th>
-            <th className="px-4 py-2 text-left ">Brand</th>
-            <th className="px-4 py-2 text-left ">Quantity</th>
-            <th className="px-4 py-2 text-left ">Available Quantity</th>
+            <th className="px-4 py-2 text-left ">Full Name</th>
+            <th className="px-4 py-2 text-left ">Email</th>
+            <th className="px-4 py-2 text-left ">Job Role</th>
+            <th className="px-4 py-2 text-left ">Department</th>
+            <th className="px-4 py-2 text-left ">City</th>
             <th className="px-4 py-2 text-left ">Action</th>
           </tr>
         </thead>
         <tbody className="text-gray-600 text-sm font-light">
           {currentItems.map((item, index) => (
             <tr key={index} className="border-b border-gray-200 hover:bg-gray-100">
-              <td className="px-4 py-2 border">
-                <img src={item.picture} alt={item.name} className="w-12 h-12 rounded-full" />
-              </td>
-              <td className="px-4 py-2 border ">{item.name}</td>
-              <td className="px-4 py-2 border ">{item.type}</td>
-              <td className="px-4 py-2 border ">{item.brand}</td>
-              <td className="px-4 py-2 border ">{item.quantity}</td>
-              <td className="px-4 py-2 border ">{item.availableQuantity}</td>
-              <td className="px-4 py-2 border ">
-                <button className="bg-blue-500 text-white px-2 py-1 rounded-md">Action</button>
-              </td>
-            </tr>
+            <td className="px-4 py-2 text-left">{item.fullName}</td>
+            <td className="px-4 py-2 text-left">{item.email}</td>
+            <td className="px-4 py-2 text-left">{item.jobRole}</td>
+            <td className="px-4 py-2 text-left">{item.department}</td>
+            <td className="px-4 py-2 text-left">{item.city}</td>
+            <td className="px-4 py-2 text-left">{item.action}</td>
+          </tr>
           ))}
         </tbody>
       </table>
@@ -153,6 +166,46 @@ const Employees = () => {
           </div>
         </div>
       </div>
+      <PopUp
+        heading="Add Employees"
+        buttonText="Submit"
+        inputs={[
+          { label: 'Full Name', placeholder: '', type: 'text' },
+          { label: 'Email', placeholder: '', type: 'text' },
+          { label: 'Job Role', placeholder: '', type: 'text' },
+          {
+            label: 'Department',
+            placeholder: '',
+            type: 'dropdown',
+            options: [
+              { label: 'USA', value: 'USA' },
+              { label: 'Canada', value: 'Canada' },
+              { label: 'Mexico', value: 'Mexico' },
+              { label: 'UK', value: 'UK' }
+              
+            ]
+          },
+          { label: 'City', placeholder: '', type: 'text' },
+
+          {
+            label: 'Country',
+            placeholder: '',
+            type: 'dropdown',
+            options: [
+              { label: 'USA', value: 'USA' },
+              { label: 'Canada', value: 'Canada' },
+              { label: 'Mexico', value: 'Mexico' },
+              { label: 'UK', value: 'UK' }
+              
+            ]
+          },
+
+          { label: 'Address', placeholder: '', type: 'text' },
+          
+        ]}
+        open={popupOpen}
+        onClose={togglePopup}
+      />
     </div>
   )
 }

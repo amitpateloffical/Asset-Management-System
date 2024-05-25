@@ -6,6 +6,8 @@ import { CSVLink } from 'react-csv';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import { FaFileCsv } from 'react-icons/fa6';
+import { IoMdAdd } from 'react-icons/io';
+import PopUp from '../PopUp/PopUp';
 
 
 const Maintenance = () => {
@@ -13,18 +15,29 @@ const Maintenance = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [popupOpen, setPopupOpen] = useState(false);
+
+  const togglePopup = () => {
+    setPopupOpen(!popupOpen);
+  };
 
   const data = Array.from({ length: 50 }, (_, index) => ({
-    picture: `https://via.placeholder.com/150?text=Item${index + 1}`,
-    name: `Component ${index + 1}`,
+    assetTag: `TAG${index + 1}`,
+    asset: `Component ${index + 1}`,
+    supplier: ['Apple', 'Dell', 'Epson', 'Asus'][index % 4],
     type: ['Laptop', 'Scanner', 'UPS', 'Hardware'][index % 4],
-    brand: ['Apple', 'Dell', 'Epson', 'Asus'][index % 4],
-    quantity: Math.floor(Math.random() * 10) + 1,
-    availableQuantity: Math.floor(Math.random() * 10)
+    startDate: new Date(2023, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toLocaleDateString(),
+    endDate: new Date(2024, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toLocaleDateString(),
+    action: (
+      <>
+        <button className="px-2 py-1 bg-blue-500 text-white rounded mr-2">Edit</button>
+        <button className="px-2 py-1 bg-red-500 text-white rounded">Delete</button>
+      </>
+    )
   }));
 
   const filteredData = data.filter(item =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    item.asset.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -41,8 +54,15 @@ const Maintenance = () => {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-gray-700">Maintenance List</h1>
-     
+      <div className="flex justify-between items-center pb-3">
+        <h1 className="text-2xl font-semibold mb-6 text-gray-700">
+          Maintenance List
+        </h1>
+        <button  onClick={togglePopup} className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+  <IoMdAdd className="inline-block align-text-bottom mr-1" />
+  Add Maintenance
+</button>
+      </div>
         <div className="flex flex-wrap items-center mb-4">
           <button className="mr-2 p-2 bg-blue-500 text-white rounded flex items-center">
             <FiCopy className="mr-2" /> Copy
@@ -80,12 +100,12 @@ const Maintenance = () => {
       <table id="component-table" className="min-w-full bg-white">
         <thead>
           <tr className="w-full bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-            <th className="px-4 py-2 text-left ">Picture</th>
-            <th className="px-4 py-2 text-left ">Name</th>
+            <th className="px-4 py-2 text-left ">Asset tag</th>
+            <th className="px-4 py-2 text-left ">Asset</th>
+            <th className="px-4 py-2 text-left ">Supplier</th>
             <th className="px-4 py-2 text-left ">Type</th>
-            <th className="px-4 py-2 text-left ">Brand</th>
-            <th className="px-4 py-2 text-left ">Quantity</th>
-            <th className="px-4 py-2 text-left ">Available Quantity</th>
+            <th className="px-4 py-2 text-left ">Start Date </th>
+            <th className="px-4 py-2 text-left ">End Date</th>
             <th className="px-4 py-2 text-left ">Action</th>
           </tr>
         </thead>
@@ -93,15 +113,15 @@ const Maintenance = () => {
           {currentItems.map((item, index) => (
             <tr key={index} className="border-b border-gray-200 hover:bg-gray-100">
               <td className="px-4 py-2 border">
-                <img src={item.picture} alt={item.name} className="w-12 h-12 rounded-full" />
+               {item.assetTag}
               </td>
-              <td className="px-4 py-2 border ">{item.name}</td>
+              <td className="px-4 py-2 border ">{item.asset}</td>
+              <td className="px-4 py-2 border ">{item.supplier}</td>
               <td className="px-4 py-2 border ">{item.type}</td>
-              <td className="px-4 py-2 border ">{item.brand}</td>
-              <td className="px-4 py-2 border ">{item.quantity}</td>
-              <td className="px-4 py-2 border ">{item.availableQuantity}</td>
+              <td className="px-4 py-2 border ">{item.startDate}</td>
+              <td className="px-4 py-2 border ">{item.endDate}</td>
               <td className="px-4 py-2 border ">
-                <button className="bg-blue-500 text-white px-2 py-1 rounded-md">Action</button>
+                {item.action}
               </td>
             </tr>
           ))}
@@ -151,6 +171,53 @@ const Maintenance = () => {
           </div>
         </div>
       </div>
+      <PopUp
+        heading="Add Maintenance"
+        buttonText="Submit"
+        inputs={[
+          {
+            label: 'Asset',
+            placeholder: '',
+            type: 'dropdown',
+            options: [
+              { label: 'USA', value: 'USA' },
+              { label: 'Canada', value: 'Canada' },
+              { label: 'Mexico', value: 'Mexico' },
+              { label: 'UK', value: 'UK' }
+              
+            ]
+          },
+          {
+            label: 'Supplier',
+            placeholder: '',
+            type: 'dropdown',
+            options: [
+              { label: 'USA', value: 'USA' },
+              { label: 'Canada', value: 'Canada' },
+              { label: 'Mexico', value: 'Mexico' },
+              { label: 'UK', value: 'UK' }
+              
+            ]
+          },
+          {
+            label: 'Type',
+            placeholder: '',
+            type: 'dropdown',
+            options: [
+              { label: 'USA', value: 'USA' },
+              { label: 'Canada', value: 'Canada' },
+              { label: 'Mexico', value: 'Mexico' },
+              { label: 'UK', value: 'UK' }
+              
+            ]
+          },
+          { label: 'Start date', placeholder: '', type: 'date' },
+          { label: 'End date', placeholder: '', type: 'date' },
+         
+]}
+        open={popupOpen}
+        onClose={togglePopup}
+      />
     </div>
   )
 }

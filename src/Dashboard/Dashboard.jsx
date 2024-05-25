@@ -1,8 +1,46 @@
-import { Chart } from "chart.js";
-import React from "react";
+
+import React, { useState } from "react";
 import { FiList, FiServer, FiTool, FiUsers } from 'react-icons/fi';
+import Chart from "../Components/Chart/Chart";
+import AssetByStatusChart from "../Components/AssetByStatusChart/AssetByStatusChart";
 
 const Dashboard = () => {
+  const [data, setData] = useState(
+    Array.from({ length: 10 }, (_, index) => ({
+      asset: `Asset ${index + 1}`,
+      employees: Math.floor(Math.random() * 100) + 1,
+      isCheckedIn: index % 2 === 0, // Example check-in/check-out logic
+      location: `Location ${index + 1}`,
+      date: new Date().toLocaleDateString(),
+    }))
+  );
+
+  const handleCheckInOut = (index) => {
+    setData(prevData => {
+      const newData = [...prevData];
+      newData[index].isCheckedIn = !newData[index].isCheckedIn;
+      return newData;
+    });
+  };
+
+  const [componentData, setComponentData] = useState(
+    Array.from({ length: 10 }, (_, index) => ({
+      component: `Component ${index + 1}`,
+      asset: `Asset ${index + 1}`,
+      quantity: Math.floor(Math.random() * 10) + 1,
+      isCheckedIn: index % 2 === 0, // Example check-in/check-out logic
+      location: `Location ${index + 1}`,
+      date: new Date().toLocaleDateString(),
+    }))
+  );
+
+  const handleComponentCheckInOut = (index) => {
+    setComponentData(prevData => {
+      const newData = [...prevData];
+      newData[index].isCheckedIn = !newData[index].isCheckedIn;
+      return newData;
+    });
+  };
   const cards = [
     {
       title: 'Total asset',
@@ -59,7 +97,77 @@ const Dashboard = () => {
         </div>
       ))}
     </div>
-    {/* <Chart/> */}
+   <div className="grid grid-cols-2 gap-10">
+   <Chart/>
+   <AssetByStatusChart/>
+   <div className="overflow-x-auto bg-white rounded shadow-md">
+    <div className="flex justify-center items-center py-3 text-xl">Recent asset activity</div>
+      <table id="component-table" className="min-w-full bg-white">
+        <thead>
+          <tr className="w-full bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+            <th className="px-4 py-2 text-left ">Asset</th>
+            <th className="px-4 py-2 text-left ">Employees</th>
+            <th className="px-4 py-2 text-left ">Status</th>
+            <th className="px-4 py-2 text-left ">Location</th>
+            <th className="px-4 py-2 text-left ">Date</th>
+          </tr>
+        </thead>
+        <tbody className="text-gray-600 text-sm font-light">
+        {data.map((item, index) => (
+          <tr key={index} className="text-sm leading-normal">
+            <td className="px-4 py-2">{item.asset}</td>
+            <td className="px-4 py-2">{item.employees}</td>
+            <td className="px-4 py-2">
+              {item.isCheckedIn ? (
+                <button className="px-2 py-1 bg-green-500 text-white rounded" onClick={() => handleCheckInOut(index)}>Check-out</button>
+              ) : (
+                <button className="px-2 py-1 bg-blue-500 text-white rounded" onClick={() => handleCheckInOut(index)}>Check-in</button>
+              )}
+            </td>
+            <td className="px-4 py-2">{item.location}</td>
+            <td className="px-4 py-2">{item.date}</td>
+         
+          </tr>
+        ))}
+        </tbody>
+      </table>
+      </div>
+      <div className="overflow-x-auto bg-white rounded shadow-md">
+    <div className="flex justify-center items-center py-3 text-xl">Recent component activity</div>
+
+      <table id="component-table" className="min-w-full bg-white">
+        <thead>
+          <tr className="w-full bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+            <th className="px-4 py-2 text-left ">Component</th>
+            <th className="px-4 py-2 text-left ">Asset</th>
+            <th className="px-4 py-2 text-left ">Quantity</th>
+            <th className="px-4 py-2 text-left ">Status</th>
+            <th className="px-4 py-2 text-left ">Location</th>
+            <th className="px-4 py-2 text-left ">Date</th>
+          </tr>
+        </thead>
+        <tbody className="text-gray-600 text-sm font-light">
+        {componentData.map((item, index) => (
+          <tr key={index} className="text-sm leading-normal">
+            <td className="px-4 py-2">{item.component}</td>
+            <td className="px-4 py-2">{item.asset}</td>
+            <td className="px-4 py-2">{item.quantity}</td>
+            <td className="px-4 py-2">
+              {item.isCheckedIn ? (
+                <button className="px-2 py-1 bg-green-500 text-white rounded" onClick={() => handleComponentCheckInOut(index)}>Check-out</button>
+              ) : (
+                <button className="px-2 py-1 bg-blue-500 text-white rounded" onClick={() => handleComponentCheckInOut(index)}>Check-in</button>
+              )}
+            </td>
+            <td className="px-4 py-2">{item.location}</td>
+            <td className="px-4 py-2">{item.date}</td>
+            
+          </tr>
+        ))}
+        </tbody>
+      </table>
+      </div>
+   </div>
   </>
   );
 };

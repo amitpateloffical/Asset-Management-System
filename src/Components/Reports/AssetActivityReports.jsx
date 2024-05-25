@@ -1,42 +1,38 @@
-
-
 import React, { useState } from 'react';
 import { FiCopy, FiFileText, FiPrinter } from 'react-icons/fi';
 import { CSVLink } from 'react-csv';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import { FaFileCsv } from 'react-icons/fa6';
-import PopUp from '../PopUp/PopUp';
-import { IoMdAdd } from 'react-icons/io';
 
 
-const Depreciation = () => {
+
+const AssetActivityReports = () => {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [popupOpen, setPopupOpen] = useState(false);
 
-  const togglePopup = () => {
-    setPopupOpen(!popupOpen);
+  const [data, setData] = useState(
+    Array.from({ length: 50 }, (_, index) => ({
+      asset: `Asset ${index + 1}`,
+      employees: Math.floor(Math.random() * 100) + 1,
+      status: index % 2 === 0, // Example check-in/check-out logic
+      location: `Location ${index + 1}`,
+      date: new Date().toLocaleDateString(),
+    }))
+  );
+
+  const handleCheckInOut = (index,isCheckIn) => {
+    setData(prevData => {
+      const newData = [...prevData];
+      newData[index].status = isCheckIn;
+      return newData;
+    });
   };
 
-  const data = Array.from({ length: 50 }, (_, index) => ({
-    name: `Component ${index + 1}`,
-    coast: `${(Math.random() * 1000).toFixed(2)}`,
-    period: Math.floor(Math.random() * 12) + 1,
-    category: ['Electronics', 'Furniture', 'Stationery', 'Software'][index % 4],
-    assetValue: `${(Math.random() * 10000).toFixed(2)}`,
-    action: (
-      <>
-        <button className="px-2 py-1 bg-blue-500 text-white rounded mr-2">Edit</button>
-        <button className="px-2 py-1 bg-red-500 text-white rounded">Delete</button>
-      </>
-    )
-  }));
-
   const filteredData = data.filter(item =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    item.asset.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -55,12 +51,8 @@ const Depreciation = () => {
     <div className="p-6 bg-gray-100 min-h-screen">
       <div className="flex justify-between items-center pb-3">
         <h1 className="text-2xl font-semibold mb-6 text-gray-700">
-          Depreciation List
+          Asset Activity Report
         </h1>
-        <button  onClick={togglePopup} className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
-  <IoMdAdd className="inline-block align-text-bottom mr-1" />
-  Add Depreciation
-</button>
       </div>
         <div className="flex flex-wrap items-center mb-4">
           <button className="mr-2 p-2 bg-blue-500 text-white rounded flex items-center">
@@ -99,23 +91,28 @@ const Depreciation = () => {
       <table id="component-table" className="min-w-full bg-white">
         <thead>
           <tr className="w-full bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-            <th className="px-4 py-2 text-left ">Name</th>
-            <th className="px-4 py-2 text-left ">Coast</th>
-            <th className="px-4 py-2 text-left ">Period (Month) </th>
-            <th className="px-4 py-2 text-left ">Category</th>
-            <th className="px-4 py-2 text-left ">Asset Value</th>
-            <th className="px-4 py-2 text-left ">Action</th>
+           
+            <th className="px-4 py-2 text-left ">Asset</th>
+            <th className="px-4 py-2 text-left ">Employees</th>
+            <th className="px-4 py-2 text-left ">Status</th>
+            <th className="px-4 py-2 text-left ">Location</th>
+            <th className="px-4 py-2 text-left ">Date</th>
           </tr>
         </thead>
         <tbody className="text-gray-600 text-sm font-light">
           {currentItems.map((item, index) => (
             <tr key={index} className="border-b border-gray-200 hover:bg-gray-100">
-               <td className="px-4 py-2 text-left">{item.name}</td>
-            <td className="px-4 py-2 text-left">{item.coast}</td>
-            <td className="px-4 py-2 text-left">{item.period}</td>
-            <td className="px-4 py-2 text-left">{item.category}</td>
-            <td className="px-4 py-2 text-left">{item.assetValue}</td>
-            <td className="px-4 py-2 text-left">{item.action}</td>
+              <td className="px-4 py-2 border ">{item.asset}</td>
+              <td className="px-4 py-2 border ">{item.employees}</td>
+              <td className="px-4 py-2">
+              {item.isCheckedIn ? (
+                <button className="px-2 py-1 bg-green-500 text-white rounded" onClick={() => handleCheckInOut(index)}>Check-out</button>
+              ) : (
+                <button className="px-2 py-1 bg-blue-500 text-white rounded" onClick={() => handleCheckInOut(index)}>Check-in</button>
+              )}
+            </td>
+            <td className="px-4 py-2">{item.location}</td>
+            <td className="px-4 py-2">{item.date}</td>
             </tr>
           ))}
         </tbody>
@@ -164,31 +161,8 @@ const Depreciation = () => {
           </div>
         </div>
       </div>
-      <PopUp
-        heading="Add Depreciation"
-        buttonText="Submit"
-        inputs={[
-          {
-            label: 'Category',
-            placeholder: '',
-            type: 'dropdown',
-            options: [
-              { label: 'USA', value: 'USA' },
-              { label: 'Canada', value: 'Canada' },
-              { label: 'Mexico', value: 'Mexico' },
-              { label: 'UK', value: 'UK' }
-              
-            ]
-          },
-          { label: 'Period (Month)', placeholder: '', type: 'number' },
-          { label: 'Asset Value', placeholder: '', type: 'number' },
-         
-        ]}
-        open={popupOpen}
-        onClose={togglePopup}
-      />
     </div>
   )
 }
 
-export default Depreciation
+export default AssetActivityReports

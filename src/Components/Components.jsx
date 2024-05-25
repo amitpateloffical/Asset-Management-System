@@ -4,6 +4,8 @@ import { CSVLink } from 'react-csv';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import { FaFileCsv } from 'react-icons/fa6';
+import { IoMdAdd } from 'react-icons/io';
+import PopUp from '../PopUp/PopUp';
 
 
 const Components = () => {
@@ -11,6 +13,11 @@ const Components = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [popupOpen, setPopupOpen] = useState(false);
+
+  const togglePopup = () => {
+    setPopupOpen(!popupOpen);
+  };
 
   const data = Array.from({ length: 50 }, (_, index) => ({
     picture: `https://via.placeholder.com/150?text=Item${index + 1}`,
@@ -39,8 +46,15 @@ const Components = () => {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-gray-700">Component List</h1>
-     
+      <div className="flex justify-between items-center pb-3">
+        <h1 className="text-2xl font-semibold mb-6 text-gray-700">
+        Component List
+        </h1>
+        <button  onClick={togglePopup} className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+  <IoMdAdd className="inline-block align-text-bottom mr-1" />
+  Add Component
+</button>
+      </div>
         <div className="flex flex-wrap items-center mb-4">
           <button className="mr-2 p-2 bg-blue-500 text-white rounded flex items-center">
             <FiCopy className="mr-2" /> Copy
@@ -149,6 +163,85 @@ const Components = () => {
           </div>
         </div>
       </div>
+      <PopUp
+        heading="Add Component"
+        buttonText="Submit"
+        inputs={[
+          { label: 'Name', placeholder: '', type: 'text' },
+          { label: 'Serial', placeholder: '', type: 'text' },
+          { label: 'Quantity', placeholder: '', type: 'text' },
+          {
+            label: 'Supplier',
+            placeholder: '',
+            type: 'dropdown',
+            options: [
+              { label: 'USA', value: 'USA' },
+              { label: 'Canada', value: 'Canada' },
+              { label: 'Mexico', value: 'Mexico' },
+              { label: 'UK', value: 'UK' }
+              
+            ]
+          },
+          {
+            label: 'Asset Type',
+            placeholder: '',
+            type: 'dropdown',
+            options: [
+              { label: 'USA', value: 'USA' },
+              { label: 'Canada', value: 'Canada' },
+              { label: 'Mexico', value: 'Mexico' },
+              { label: 'UK', value: 'UK' }
+              
+            ]
+          },
+
+          
+          {
+            label: 'Location',
+            placeholder: '',
+            type: 'dropdown',
+            options: [
+              { label: 'USA', value: 'USA' },
+              { label: 'Canada', value: 'Canada' },
+              { label: 'Mexico', value: 'Mexico' },
+              { label: 'UK', value: 'UK' }
+              
+            ]
+          },
+          {
+            label: 'Brand',
+            placeholder: '',
+            type: 'dropdown',
+            options: [
+              { label: 'USA', value: 'USA' },
+              { label: 'Canada', value: 'Canada' },
+              { label: 'Mexico', value: 'Mexico' },
+              { label: 'UK', value: 'UK' }
+              
+            ]
+          },
+          { label: 'Cost', placeholder: '', type: 'text' },
+          { label: 'Purchase date', placeholder: '', type: 'date' },
+          { label: 'Warranty', placeholder: '', type: 'date' },
+          {
+            label: 'Status',
+            placeholder: '',
+            type: 'dropdown',
+            options: [
+              { label: 'USA', value: 'USA' },
+              { label: 'Canada', value: 'Canada' },
+              { label: 'Mexico', value: 'Mexico' },
+              { label: 'UK', value: 'UK' }
+              
+            ]
+          },
+          { label: 'Description', placeholder: '', type: 'text' },
+          { label: 'Picture', placeholder: '', type: 'file' },
+
+        ]}
+        open={popupOpen}
+        onClose={togglePopup}
+      />
     </div>
   )
 }

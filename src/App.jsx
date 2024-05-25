@@ -16,6 +16,13 @@ import Department from './Components/Department'
 import Reports from './Components/Reports'
 import Users from './Components/Setting/Users'
 import Application from './Components/Setting/Application'
+import AssetActivityReports from './Components/Reports/AssetActivityReports'
+import MaintenanceReport from './Components/Reports/MaintenanceReport'
+import ReportByStatus from './Components/Reports/ReportByStatus'
+import ReportByLocation from './Components/Reports/ReportByLocation'
+import ComponentActivityReport from './Components/Reports/ComponentActivityReport'
+import ReportByType from './Components/Reports/ReportByType'
+import ReportBySupplier from './Components/Reports/ReportBySupplier'
 
 
 function App() {
@@ -40,6 +47,13 @@ function App() {
     <Route path='/report' element={<Reports/>}/>
     <Route path='/setting/users' element={<Users/>}/>
     <Route path='/setting/application' element={<Application/>}/>
+    <Route path='/report/asset-activity-report' element={<AssetActivityReports/>}/>
+    <Route path='/report/maintenance-report' element={<MaintenanceReport/>}/>
+    <Route path='/report/report-by-status' element={<ReportByStatus/>}/>
+    <Route path='/report/report-by-location' element={<ReportByLocation/>}/>
+    <Route path='/report/component-activity-report' element={<ComponentActivityReport/>}/>
+    <Route path='/report/report-by-type' element={<ReportByType/>}/>
+    <Route path='/report/report-by-supplier' element={<ReportBySupplier/>}/>
 
 
     </Route>

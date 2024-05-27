@@ -23,7 +23,7 @@ const data = [
     { name: 'Laptop', value: 1300, color: '#BDBDBD' },
   ];
   return (
-    <div className='flex flex-col justify-center items-center shadow-2xl pt-5'>
+    <div className='flex flex-col justify-center items-center shadow-2xl pt-5 -z-10'>
     <div className='text-xl'>
   Assets by Type
     </div>

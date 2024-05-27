@@ -14,7 +14,7 @@ const AssetByStatusChart = () => {
         { name: 'Out of repair', value: 4800, color: '#F06292' },
       ];
   return (
-  <div className='flex flex-col justify-center items-center shadow-2xl pt-5'>
+  <div className='flex flex-col justify-center items-center shadow-2xl pt-5 -z-10'>
   <div className='text-xl'>
 Assets by Status
   </div>

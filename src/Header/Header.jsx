@@ -35,7 +35,7 @@ const Header = () => {
   }, [dropdownOpen]);
 
   return (
-    <div className="w-[86.5%] h-[70px]  items-center   px-4 py-2 bg-white shadow-md">
+    <div className="w-[85%] h-[70px]  items-center   px-4 py-2 bg-white shadow-md">
   <div className="flex h-[70px]  items-center justify-between">
   
 

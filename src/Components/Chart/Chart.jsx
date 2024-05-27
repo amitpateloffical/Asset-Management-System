@@ -23,11 +23,11 @@ const data = [
     { name: 'Laptop', value: 1300, color: '#BDBDBD' },
   ];
   return (
-    <div className='flex flex-col justify-center items-center shadow-2xl pt-5 -z-10'>
+    <div className='flex flex-col justify-center items-center  pt-5 -z-10' style={{boxShadow:" 5px 5px 5px 5px rgba(0, 0, 0, 0.2)"}}>
     <div className='text-xl'>
   Assets by Type
     </div>
-    <PieChart width={800} height={400}>
+    <PieChart width={700} height={400}>
     <Pie
       data={data}
       dataKey="value"

@@ -97,7 +97,7 @@ const Dashboard = () => {
         </div>
       ))}
     </div>
-   <div className="grid grid-cols-2 gap-10 ">
+   <div className="grid grid-cols-2 mt-7 gap-10 ">
    <Chart/>
    <AssetByStatusChart/>
    <div className="overflow-x-auto bg-white rounded shadow-md">

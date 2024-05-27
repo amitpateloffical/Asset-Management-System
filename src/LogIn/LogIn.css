@@ -1,4 +1,90 @@
-.login-container{
-    background: url("https://img.freepik.com/premium-photo/keyboard-coffee-smartphone-notebook-color-background-top-view_1286-776.jpg");
-    background-size: cover;
+/* LogIn.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* background-image: url("https://image.shutterstock.com/image-vector/abstract-background-design-website-landing-260nw-1750085066.jpg"); */
+   background-size: cover;
+}
+
+.login-box {
+    display: flex;
+    width: 1200px;
+    background-color: white;
+    border-radius: 10px;
+    /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); */
+    overflow: hidden;
+    opacity: 0.8;
+}
+
+.left-side {
+    flex: 1;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-image {
+    max-width: 100%;
+    height: 105%;
+}
+
+.right-side {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+}
+
+h2 {
+
+    margin-bottom: 10px;
+}
+
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.forgot-password {
+    display: block;
+    margin-bottom: 20px;
+    color: #3498db;
+    text-align: right;
+}
+
+.sign-in-btn {
+    background-color: #3498db;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+
+
+
+

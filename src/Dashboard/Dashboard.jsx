@@ -46,38 +46,39 @@ const Dashboard = () => {
       title: 'Total asset',
       count: 222,
       icon: <FiList size={32} />,
-      color: 'bg-cyan-500',
+      color: 'https://t3.ftcdn.net/jpg/02/39/84/98/360_F_239849887_xKMRLWW8RIRGqP7TVaWWX8NmgXgseF9S.jpg',
       link: '/assets',
     },
     {
       title: 'Total component',
-      count: 2423031,
+      count: 24231,
       icon: <FiServer size={32} />,
-      color: 'bg-yellow-400',
+      color: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRf7ct00JB3_LIltQHIqp2jawcI-QERlXubhpiCb7lkx-SdRnFXAyBzjcY5XegMQuhRdvo&usqp=CAU',
       link: '/component',
     },
     {
       title: 'Total maintenance',
       count: 227,
       icon: <FiTool size={32} />,
-      color: 'bg-green-500',
+      color: 'https://media.istockphoto.com/id/1323860984/vector/green-background-in-vector-illustration-with-glow-and-lights.jpg?s=612x612&w=0&k=20&c=8IJexeaZOCxSRrNiCCgUvB-dexsy8w9PEF1IF8v4skU=',
       link: '/maintenance',
     },
     {
       title: 'Total employee',
       count: 77,
       icon: <FiUsers size={32} />,
-      color: 'bg-red-400',
+      color: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKO4Z4Jop1kp2JeGxLxbR_VOXKeU8m7-d-RZ9iBG4w5VX7MECI3TNvM23wfqE--F0cXS4&usqp=CAU',
       link: '/employees',
     },
   ];
   return (
-  <>
+  <div className="">
    <div className="flex flex-wrap justify-between ">
       {cards.map((card, index) => (
         <div
           key={index}
-          className={`w-full sm:w-1/2 lg:w-1/5 p-4 ${card.color} rounded-lg shadow-md text-white`}
+          className={`w-full sm:w-1/2 lg:w-1/5 p-4  rounded-lg shadow-md text-white`}
+          style={{backgroundImage:`url(${card.color})`, backgroundSize:"cover"}}
         >
           <div className="flex items-center">
             <div className="mr-4">{card.icon}</div>
@@ -97,11 +98,11 @@ const Dashboard = () => {
         </div>
       ))}
     </div>
-   <div className="grid grid-cols-2 mt-7 gap-10 ">
+   <div className="grid grid-cols-2 mt-7 gap-10 z-30">
    <Chart/>
    <AssetByStatusChart/>
-   <div className="overflow-x-auto bg-white rounded shadow-md">
-    <div className="flex justify-center items-center py-3 text-xl">Recent asset activity</div>
+   <div className="overflow-x-auto bg-white rounded shadow-md" style={{boxShadow:" 5px 5px 5px 5px rgba(0, 0, 0, 0.2)"}}>
+    <div className="flex justify-center items-center py-3 text-xl bg-gradient-to-r from-purple-400 via-pink-500 to-red-500" >Recent asset activity</div>
       <table id="component-table" className="min-w-full bg-white">
         <thead>
           <tr className="w-full bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -132,8 +133,8 @@ const Dashboard = () => {
         </tbody>
       </table>
       </div>
-      <div className="overflow-x-auto bg-white rounded shadow-md">
-    <div className="flex justify-center items-center py-3 text-xl">Recent component activity</div>
+      <div className="overflow-x-auto bg-white rounded shadow-md" style={{boxShadow:" 5px 5px 5px 5px rgba(0, 0, 0, 0.2)"}}>
+    <div className="flex justify-center items-center py-3 text-xl bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">Recent component activity</div>
 
       <table id="component-table" className="min-w-full bg-white">
         <thead>
@@ -168,7 +169,7 @@ const Dashboard = () => {
       </table>
       </div>
    </div>
-  </>
+  </div>
   );
 };
 

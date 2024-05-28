@@ -4,7 +4,7 @@ import { RxCross2 } from 'react-icons/rx'
 const PopUp =({ heading, buttonText, inputs, open, onClose}) => {
 
   return (
-    <div>
+    <div className=''>
     {open && (
       <div
         className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center"

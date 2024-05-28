@@ -80,7 +80,7 @@ const ReportByLocation = () => {
         <input
           type="text"
           placeholder="Search..."
-          className="ml-auto p-2 border rounded shadow"
+          className="ml-auto p-2 border rounded shadow w-fit"
           onChange={e => setSearchTerm(e.target.value)}
         />
      </div>

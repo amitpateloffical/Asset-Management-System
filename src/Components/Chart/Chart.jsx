@@ -19,15 +19,17 @@ const data = [
     { name: 'UPS', value: 900, color: '#A1887F' },
     { name: 'Chair', value: 1500, color: '#C5E1A5' },
     { name: 'TWO POST LIFTS', value: 2000, color: '#FFCDD2' },
-    { name: 'WHEEL ALIGNER', value: 800, color: '#FFF59D' },
+    { name: 'WHEEL ALIGNER', value: 800, color: '#D9D962' },
     { name: 'Laptop', value: 1300, color: '#BDBDBD' },
   ];
+
+  
   return (
     <div className='flex flex-col justify-center items-center  pt-5 -z-10' style={{boxShadow:" 5px 5px 5px 5px rgba(0, 0, 0, 0.2)"}}>
-    <div className='text-xl'>
+    <div className='text-xl text-center border-b border-gray-400 w-[90%] pb-2'>
   Assets by Type
     </div>
-    <PieChart width={700} height={400}>
+    <PieChart width={650} height={400}>
     <Pie
       data={data}
       dataKey="value"

@@ -63,7 +63,7 @@ const Maintenance = () => {
   Add Maintenance
 </button>
       </div>
-        <div className="flex flex-wrap items-center mb-4">
+        <div className="flex items-center mb-4">
           <button className="mr-2 p-2 bg-blue-500 text-white rounded flex items-center">
             <FiCopy className="mr-2" /> Copy
           </button>
@@ -71,12 +71,13 @@ const Maintenance = () => {
           className="mr-2 p-2 bg-green-500 text-white rounded flex items-center"
           data={data}
           headers={[
-            { label: 'Picture', key: 'picture' },
-            { label: 'Name', key: 'name' },
+            { label: 'Asset Tag', key: 'assetTag' },
+            { label: 'Asset', key: 'asset' },
+            { label: 'Supplier', key: 'supplier' },
             { label: 'Type', key: 'type' },
-            { label: 'Brand', key: 'brand' },
-            { label: 'Quantity', key: 'quantity' },
-            { label: 'Available Quantity', key: 'availableQuantity' }
+            { label: 'Start Date', key: 'startDate' },
+            { label: 'End Date', key: 'endDate' },
+            { label: 'Action', key: 'action' }
           ]}
           filename="component-list.csv"
         >
@@ -92,7 +93,7 @@ const Maintenance = () => {
         <input
           type="text"
           placeholder="Search..."
-          className="ml-auto p-2 border rounded shadow"
+          className="ml-auto p-2 border rounded shadow w-fit"
           onChange={e => setSearchTerm(e.target.value)}
         />
      </div>

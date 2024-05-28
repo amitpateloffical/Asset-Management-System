@@ -45,7 +45,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   return (
     <div className="">
     {sidebarOpen && (
-      <div className="fixed w-64 flex flex-col gap-5 bg-gradient-to-r from-[#7bcbd7] via-[#72b6be] to-[#70becb] text-white p-4 " style={{zIndex:1, overflowY:"auto",height:"100vh"}}>
+      <div className="fixed w-64 flex flex-col gap-5 bg-gradient-to-r from-green-300 via-cyan-600 to-blue-500 text-white p-4 " style={{zIndex:1, overflowY:"auto",height:"100vh"}}>
 
 <img
       src="/login.png"

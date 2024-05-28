@@ -49,7 +49,7 @@ const ReportByStatus = () => {
           Report By Status
         </h1>
       </div>
-        <div className="flex flex-wrap items-center mb-4">
+        <div className="flex items-center mb-4">
           <button className="mr-2 p-2 bg-blue-500 text-white rounded flex items-center">
             <FiCopy className="mr-2" /> Copy
           </button>
@@ -78,7 +78,7 @@ const ReportByStatus = () => {
         <input
           type="text"
           placeholder="Search..."
-          className="ml-auto p-2 border rounded shadow"
+          className="ml-auto p-2 border rounded shadow w-fit"
           onChange={e => setSearchTerm(e.target.value)}
         />
      </div>
